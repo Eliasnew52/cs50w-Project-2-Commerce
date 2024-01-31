@@ -33,7 +33,18 @@ def NewListing(request):
 
 def Display(request):
     if request.method == "POST":
-        return render(request,"auctions/display.html")
+        Selection = request.POST['category']
+        CategorySelected = Category.objects.get(CatName= Selection)
+        SelectedListings = Listings.objects.filter(IsActive=True, Item_Category=CategorySelected)
+        CategoryList = Category.objects.all()
+        return render(request, "auctions/index.html",{
+            "Listings":SelectedListings,"Category":CategoryList,"Selection":Selection
+            })
+
+def listingInfo(request, id):
+    Info = Listings.objects.get(pk=id)
+    return render(request,"auctions/listing.html",{"Info":Info})
+       
 # D E F A U L T   V I E W S #
 
 def login_view(request):

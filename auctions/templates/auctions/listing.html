@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <h2>Item: {{ Info.Title }}</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <p>Desc: {{ Info.Description }}</p>
+        
+    </div>
+    <div class="col-4">
+        <img src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" srcset="{{ Info.Image.url }}"
+                    class="img-fluid rounded-start" style="object-fit: scale-down; max-width: 200px; max-height: 200px;"
+                    alt="{{ Info.Title }}">
+        <p>Price: {{ Info.Price }}</p>
+    </div>
+    <div class="col-4">
+        <p>Owner: {{ Info.Owner }}</p>
+        <p>Category: {{ Info.Item_Category }}</p>
+    </div>
+</div>
+
+
+{% endblock %}
