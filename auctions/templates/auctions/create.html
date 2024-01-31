@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+{% load widget_tweaks %}
+
+{% block body %}
+<h2>Listings Creations</h2>
+
+<p>Here Goes the Form</p>
+<div class="container card my-5 p-5 form" style="max-width: 400px;">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Title input -->
+        <div data-mdb-input-init class="form-outline mb-4">
+            {{ form.Title | add_class:"form-control" }}
+            {{ form.Title.label_tag }}
+        </div>
+
+        <!-- Desc input -->
+        <div data-mdb-input-init class="form-outline mb-4">
+            {{ form.Description | add_class:"form-control" }}
+            {{ form.Description.label_tag }}
+        </div>
+
+        <!-- Price input -->
+        <div data-mdb-input-init class="form-outline mb-4">
+            {{ form.Price | add_class:"form-control" }}
+            {{ form.Price.label_tag }}
+        </div>
+
+         <!-- Img input -->
+         <div data-mdb-input-init class="form-outline mb-4">
+            {{ form.Image | add_class:"form-control" }}
+            {{ form.Image.label_tag }}
+        </div>
+
+         <!-- Category input -->
+         <div data-mdb-input-init class="form-outline mb-4">
+            {{ form.Item_Category | add_class:"form-control" }}
+            {{ form.Item_Category.label_tag }}
+        </div>
+
+
+        <!-- Submit button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Submit Item</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -7,6 +7,9 @@ class User(AbstractUser):
 
 class Category(models.Model):
     CatName= models.CharField(max_length=40)
+    
+    def __str__(self):
+        return self.CatName
 
 
 class Listings(models.Model):
@@ -16,4 +19,7 @@ class Listings(models.Model):
     Price = models.FloatField()
     IsActive = models.BooleanField(default = True)
     Owner = models.ForeignKey(User,on_delete=models.CASCADE, blank = True, null = True, related_name = 'user')
-    Category = models.ForeignKey(Category, on_delete=models.CASCADE, blank = True, related_name = 'category')
+    Item_Category = models.ForeignKey(Category, on_delete=models.CASCADE, blank = True, related_name = 'category')
+
+    def __str__(self):
+        return self.Title

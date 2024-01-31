@@ -1,7 +1,46 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div style="margin-bottom: 50px;">
     <h2>Active Listings</h2>
+    <div class="row">
+    
+        <form method="post" action="{% url 'Display' %}">
+            {% csrf_token %}
+            <label for="Category">"Choose Category"</label>
+                <select name="category" id="category">
+                    {% for cat in Category %}
+                        <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+        </form>
+    </div>
+</div>
 
-    TODO
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for listing in Listings%}
+    <div class="col">
+        <div class="card" style="max-width: 350px;">
+            <div class="bg-image hover-overlay d-flex justify-content-center align-items-center" data-mdb-ripple-init
+                data-mdb-ripple-color="light">
+                <img src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" srcset="{{ listing.Image.url }}"
+                    class="img-fluid rounded-start" style="object-fit: scale-down; max-width: 200px; max-height: 200px;"
+                    alt="{{ listing.Title }}">
+                <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+            </div>
+            <div class="card-body justify-content-center align-items-center">
+                <h5 class="card-title">{{ listing.Title }}</h5>
+                <p class="card-text">{{ listing.Description }}</p>
+                <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Button</a>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+
 {% endblock %}
