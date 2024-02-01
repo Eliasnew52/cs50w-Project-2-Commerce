@@ -41,10 +41,39 @@ def Display(request):
             "Listings":SelectedListings,"Category":CategoryList,"Selection":Selection
             })
 
+
 def listingInfo(request, id):
     Info = Listings.objects.get(pk=id)
-    return render(request,"auctions/listing.html",{"Info":Info})
-       
+    #We Ensure that the Actual User is already on the Auction Watchlist
+    OnWatchList= request.user in Info.Watchlist.all()
+    return render(request,"auctions/listing.html",{
+        "Info":Info,
+        "OnWatchList":OnWatchList
+        })
+
+
+
+def Watchlist_Remove(request,id):
+    Info = Listings.objects.get(pk=id)
+    CurrentUser = request.user
+    Info.Watchlist.remove(CurrentUser)
+    return HttpResponseRedirect(reverse(listingInfo, args=(id, )))
+
+
+
+def Watchlist_Add(request,id):
+    Info = Listings.objects.get(pk=id)
+    CurrentUser = request.user
+    Info.Watchlist.add(CurrentUser)
+    return HttpResponseRedirect(reverse(listingInfo, args=(id, )))
+
+
+def DisplayWatchlist(request):
+    CurrentUser = request.user
+    UserWatchList = CurrentUser.watchlist.all()
+    return render(request,"auctions/watchlist.html",{"Listings":UserWatchList})
+
+
 # D E F A U L T   V I E W S #
 
 def login_view(request):

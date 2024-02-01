@@ -2,19 +2,10 @@
 
 {% block body %}
 <div style="margin-bottom: 50px;">
-    <h2>Active Listings</h2>
-    <div class="row mx-3">
+    <h2>Watchlist</h2>
+    <div class="row">
     
-        <form method="post" action="{% url 'Display' %}">
-            {% csrf_token %}
-            <label for="Category">"Choose Category"</label>
-                <select name="category" id="category">
-                    {% for cat in Category %}
-                        <option value="{{ cat }}">{{ cat }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-warning"> Filter </button>
-        </form>
+       
     </div>
 </div>
 

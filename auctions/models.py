@@ -21,5 +21,7 @@ class Listings(models.Model):
     Owner = models.ForeignKey(User,on_delete=models.CASCADE, blank = True, null = True, related_name = 'user')
     Item_Category = models.ForeignKey(Category, on_delete=models.CASCADE, blank = True, related_name = 'category')
 
+    Watchlist = models.ManyToManyField(User,blank=True,null=True,related_name="watchlist")
+
     def __str__(self):
         return self.Title
