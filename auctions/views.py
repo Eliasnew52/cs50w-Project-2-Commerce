@@ -49,6 +49,7 @@ def listingInfo(request, id):
     username = request.user
     listing = Listings.objects.get(pk=id)
     AllComments = Comments.objects.filter(Listing=id)
+    isOwner = request.user.username == listing.Owner.username
 
     if request.method == 'POST':     
         form = CommentForm(request.POST)
@@ -75,7 +76,8 @@ def listingInfo(request, id):
             "form": form,
              "form2": form2,
             "comments": AllComments,
-            "highest_bid":highest_bid
+            "highest_bid":highest_bid,
+            "isOwner": isOwner
         })
 
 
@@ -109,7 +111,13 @@ def DisplayWatchlist(request):
     return render(request,"auctions/watchlist.html",{"Listings":UserWatchList})
 
 
-    
+def Close(request,id):
+    ListingData = Listings.objects.get(pk=id)
+    ListingData.IsActive = False
+    ListingData.save()
+    return HttpResponseRedirect(reverse(listingInfo, args=(id, )))
+
+
 
 
 # D E F A U L T   V I E W S #

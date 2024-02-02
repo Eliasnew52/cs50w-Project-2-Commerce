@@ -12,6 +12,7 @@ urlpatterns = [
     path("listing/<int:id>",views.listingInfo,name="Listing"),
     path("remove/<int:id>",views.Watchlist_Remove,name="watchlist_remove"),
     path("add/<int:id>",views.Watchlist_Add,name="watchlist_add"),
+     path("close/<int:id>",views.Close,name="close"),
     path("watchlist",views.DisplayWatchlist,name="display_watchlist"),
 
 ]
