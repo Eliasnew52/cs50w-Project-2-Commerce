@@ -1,5 +1,5 @@
 {% extends "auctions/layout.html" %}
-
+{% load widget_tweaks %}
 {% block body %}
 <div class="col-12">
     {% if user.is_authenticated %}
@@ -31,13 +31,79 @@
     </div>
     <div class="col-4">
         <img src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" srcset="{{ Info.Image.url }}"
-            class="img-fluid rounded-start" style="object-fit: scale-down; max-width: 200px; max-height: 200px;"
+            class="img-fluid rounded-start" style="object-fit: scale-down; max-width: 300px; max-height: 300px;"
             alt="{{ Info.Title }}">
-        <p>Price: ${{ Info.Price }}</p>
+      
     </div>
     <div class="col-4">
+        <h2>Listing Overview </h2>
         <p>Owner: {{ Info.Owner }}</p>
         <p>Category: {{ Info.Item_Category }}</p>
+        <p> Base Price: ${{ Info.Price }}</p>
+        <h2>Listing Hightest Bid </h2>
+        <p> User:{{ highest_bid.BidCreator }}</p>
+        <p> Bid: {{ highest_bid.BidAmount }} </p>
+
+    </div>
+</div>
+<!-- Comment Section -->
+<div class="row">
+    <h2>Comments</h2>
+    {% if user.is_authenticated %}
+    <div class="container card my-5 p-5 form col-6" style="max-width: 400px;">
+        <div class="col-6">
+            <form method="post" action="">
+                {% csrf_token %}
+    
+                <!-- Comment input -->
+                <div data-mdb-input-init class="form-outline mb-4">
+                    {{ form.Comment.label_tag }}
+                    {{ form.Comment | add_class:"form-control" }}
+                </div>
+    
+    
+                <!-- Submit button -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Send Comment</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+    <div class="container card my-5 p-5 form col-6" style="max-width: 400px;">
+        <div class="col-6">
+            <form method="post" action="">
+                {% csrf_token %}
+    
+                <!-- Bid input -->
+                <div data-mdb-input-init class="form-outline mb-4">
+                    {{ form2.BidAmount.label_tag }}
+                    <input type="number" name="BidAmount" class="form-control" min="{{ highest_bid.BidAmount }}" required>
+                </div>
+    
+    
+                <!-- Submit button -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-warning">Send Bid</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<div class="row">
+    <div class="col-12">
+    {% for comment in comments %}
+        <div class="row">
+            <div class="card container p-3">
+                <h4>{{ comment.Author }}</h4>
+                <h5>{{ comment.Comment }}</h5>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="col-6">
+    
     </div>
 </div>
 

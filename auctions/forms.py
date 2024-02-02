@@ -1,5 +1,5 @@
 from django import forms
-from .models import Listings, Category
+from .models import Listings, Category, Comments, Bid
 
 class ListingForm(forms.ModelForm):
     
@@ -25,3 +25,35 @@ class ListingForm(forms.ModelForm):
         Listing.save()
         return Listing
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['Author','Listing','Comment']
+        widgets = {
+            'Comment':forms.TextInput(attrs={'class':'form-control w-100','placeholder':'Add Comment'}),     
+        }
+
+    #Own Save Method to Retrieve Owner and Listing to Save Comment
+    def save(self, commit=True, user=None, listing=None):
+        comment = super().save(commit=False)
+        comment.Author = user
+        comment.Listing = listing
+        if commit:
+            comment.save()
+        return comment
+
+
+class BidForm(forms.ModelForm):
+    class Meta:
+        model = Bid
+        fields = ['BidCreator','BidListing','BidAmount']
+
+
+    #Own Save Method to Retrieve Owner and Listing to Save Comment
+    def save(self, commit=True, user=None, listing=None):
+        bid = super().save(commit=False)
+        bid.BidCreator = user
+        bid.BidListing = listing
+        if commit:
+           bid.save()
+        return bid
